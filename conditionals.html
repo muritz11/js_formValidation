@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <title>conditional statements</title>
+    <style>
+        .nav{
+            background: grey;
+            /* padding: 0px 20px; */
+            /* wen building nav bars its best not to add any padding or marg in d containing div */
+        }
+        .nav a{
+            color: honeydew;
+            text-decoration: none;
+            padding: 10px 10px;
+        }
+        .nav a:hover, .dropbtn:hover{
+            background: lightgray;
+            color: gray;
+        }
+        .drp{
+            position: relative;
+        }
+        .drpc{
+            display: none;
+            position: absolute;
+            background: grey;
+            color: honeydew;
+            min-width: 260px;
+            left: 0;
+        }
+        .drpc p{
+            padding: 8px;
+            margin: 0;
+        }
+        .drp:hover .drpc{
+            display: block;
+        }
+        #form{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="">Home</a>
+            <a href="" class="drp">
+                <span>About</span>
+                <div class="drpc">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos sequi neque 
+                    </p>
+                </div>
+            </a>
+            <a href="#" class="drp">
+                <span>&nabla;</span>
+                <div class="drpc">
+                    <p class="dropbtn">Menu</p>
+                    <p class="dropbtn" id="log" onclick="openForm()">Login</p>
+                </div>
+            </a>
+        </div>
+        <div class="jumbotron">
+            <h1 class="text-center font-weight-bold">Javascript Form Validation</h1>
+        </div>
+
+        <form action="/action_page.php" id="form">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="name" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="pwd">
+        </div>
+        <div id="msg" style="display: none;"></div>
+        <button type="submit" class="btn btn-success btn-block" id="btn">Submit</button>
+        </form>
+    </div>
+    <div id="con" style="background: red;"></div>
+
+    <!-- <script src="../bootstrap/js/bootstrap.min.js"></script> -->
+    <script>
+        var users = ['john', 'mark', 'mike', 'collins'];
+        var login = document.getElementById('form');
+
+        var msg = document.getElementById('msg');
+        var save = document.getElementById('btn');
+        save.addEventListener('click', function (e){
+            e.preventDefault();
+            var user = document.getElementById('username').value;
+            var pass = document.getElementById('pwd').value;
+            // console.log(user.value+" "+pass.value);
+            
+            if (user.length < 1 || pass.length < 1){
+                displayError('Fill empty inputs', 'warning');
+            } else if(pass.length < 6){
+                displayError('Password must be upto 6 characters', 'danger');
+            } else if(user.match(/ /g)){
+                displayError('username can not contain whitespaces', 'info');
+            } else if(users.includes(user) === false){
+                displayError('username not found in database', 'info');
+            } else {
+                displayError('Login successful,welcome '+user, 'success');
+            }
+        })
+
+        function openForm(){
+            login.style.display = 'block';
+            console.log('form opened');
+        }
+
+
+
+
+        function displayError(report, colour){
+            msg.style.display = "block";
+            msg.innerHTML = "<div class='alert alert-"+ colour +"'>"+ report +"</div>";
+            setTimeout(function(){
+                msg.style.display = "none";
+            }, 3000)
+        }
+
+        function myConfirm(msg){
+            msg.style.background = 'red';
+            return confirm(msg);
+        }
+
+
+    </script>
+</body>
+</html>
